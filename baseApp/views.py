@@ -22,7 +22,7 @@ def preview(request):
                 driver.get(url)
             except Exception as e:
                 print('Invalid url/ No url found')
-                return render(request, 'baseApp\sample.html', {'form':form ,'invalid_url':True})
+                return render(request, 'baseApp\index.html', {'form':form ,'invalid_url':True})
             # time.sleep(2)
             page = driver.page_source
             driver.quit()
@@ -77,30 +77,7 @@ def preview(request):
             print(context_dict)
 
             context_dict['form'] = form
-            return render(request, 'baseApp\sample.html', context_dict)
+            return render(request, 'baseApp\index.html', context_dict)
     else:
         form = urlForm()
-        return render(request, 'baseApp\sample.html', {'form':form})
-
-# def old_preview(request):
-#     # url = 'https://www.findcoder.io/challenges/Challenge%20To%20Build%20A%20Link%20Previewer/62e3fcc51a3d874afc22ab72'
-#     # url = 'https://www.youtube.com/watch?v=-6NmzpaoHoE&ab_channel=TV9Marathi'
-#     url = 'https://www.reddit.com/r/relationship_advice/comments/wffrau/bf_20m_doesnt_leave_me_alone_when_i_tell_him_im/'
-
-#     response = requests.get(url)
-#     soup = BeautifulSoup(response.content.decode('utf-8'), 'html.parser')
-
-#     title = soup.find("meta", property="og:title")
-#     description = soup.find("meta", property="og:description")
-#     # thumbnail = soup.find("meta", property="og:image")
-#     link = soup.find("meta", property="og:url")
-#     site = soup.find("meta", property="og:site_name")
-
-#     context = {
-#         'title' : title['content'],
-#         'description' : description['content'],
-#         # 'thumbnail' : thumbnail['content'],
-#         'link' : link['content'],
-#         'site' : site['content'],
-#     }
-#     return render(request, 'baseApp\index.html', context)
+        return render(request, 'baseApp\index.html', {'form':form})
