@@ -6,8 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from .forms import urlForm
 from django.contrib import messages
-import os
-from LinkPreviewer.settings import BASE_DIR
+from webdriver_manager.chrome import ChromeDriverManager
 # Create your views here.
 
 
@@ -20,7 +19,8 @@ def preview(request):
             options.add_argument('--headless')
             options.add_argument('--disable-gpu')
             options.add_argument('--no-sandbox')
-            driver = webdriver.Chrome(chrome_options=options)
+            options.add_argument("disable-dev-shm-usage")
+            driver = webdriver.Chrome(chrome_options=options, executable_path=ChromeDriverManager().install())
             try:
                 driver.get(url)
             except Exception as e:
