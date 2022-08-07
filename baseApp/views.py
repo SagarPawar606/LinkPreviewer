@@ -22,7 +22,7 @@ def preview(request):
                 driver.get(url)
             except Exception as e:
                 print('Invalid url/ No url found')
-                return render(request, 'baseApp\index.html', {'form':form ,'invalid_url':True})
+                return render(request, 'baseApp/index.html', {'form':form ,'invalid_url':True})
             # time.sleep(2)
             page = driver.page_source
             driver.quit()
@@ -44,7 +44,7 @@ def preview(request):
             twtr_url = soup.find("meta", attrs={"name":"twitter:url"})
             twtr_site = soup.find("meta", attrs={"name":"twitter:site"})
             twtr_embeded = None
-            if twtr_card['content']=='player':
+            if twtr_embeded and twtr_card['content']=='player':
                 twtr_embeded = soup.find("meta", attrs={"name":"twitter:player"})
 
             og_tags = ['ogtitle', 'ogdescription', 'ogimage', 'ogurl', 'ogsite']
@@ -77,7 +77,7 @@ def preview(request):
             print(context_dict)
 
             context_dict['form'] = form
-            return render(request, 'baseApp\index.html', context_dict)
+            return render(request, 'baseApp/index.html', context_dict)
     else:
         form = urlForm()
-        return render(request, 'baseApp\index.html', {'form':form})
+        return render(request, 'baseApp/index.html', {'form':form})
