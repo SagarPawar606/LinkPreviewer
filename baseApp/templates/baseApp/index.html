@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <style>
+        body{
+            background: rgb(241, 241, 241);
+            background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%);
+            color: white;
+        }
+        a,p,body{
+          padding: 0;
+          margin: 0;
+        }
+        .card{
+            color: black;
+        }
+        .vertical-style-card, .messages{
+          width: 560px;
+          height: fit-content;
+          margin: auto;
+        }
+        .card-img-top{
+          width: 560px;
+          height: 240px;
+        }
+        /* --------------------- */
+        .my-card, .twitter-card{
+          width: 560px;
+          height: fit-content;
+          border: 0 solid white;
+          background-color: white;
+          color: black;
+          margin: auto;
+          margin-bottom: 50px;
+        }
+        .twitter-card{
+          border-radius:10px;
+          height: 200px;
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+        }
+        .my-card-body, .twitter-card-body{
+          padding-inline: 10px;
+          padding-block: 5px;
+        }
+        .twitter-card-body{
+          max-height: 200px;
+        }
+        .my-card-img{
+          width: 100%;
+          height: 250px;
+        }
+        .twitter-card-img{
+          border-radius:10px 0 0 10px;
+          height: 200px;
+          max-width: 200px;
+        }
+        .alert{
+          max-width: 500px;
+        }
+        
+        
+    </style>
+  </head>
+
+   <body>
+    <!-- <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">LinkPreviewer</a>
+        </div>
+    </nav> -->
+    <div class="container">
+        <h1>Check Link Preview </h1>
+        <div>
+          <form method="POST">
+            {% csrf_token %}
+            <div class="input-group my-3">
+              {{form.url}}
+              <button type="submit" class="btn btn-primary" type="button" id="button-addon2">Search</button>
+          </div>
+          </form>
+
+          {% if invalid_url %}
+            <h4 class="m-5">Pleas enter a valid URL</h4>
+          {% endif %}
+
+          <div class="messages">
+            {% if messages %}
+              <ul>
+                {% for message in messages %}
+                  {% if message.tags == 'success' %}
+                    <h6 class="alert alert-success" role="alert"><i class="bi bi-check-circle-fill"></i> {{message}}</h6>
+                  {% else %}
+                      <h6 class="alert alert-danger" role="alert"><i class="bi bi-exclamation-circle-fill"></i> {{message}}</h6>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %} 
+          </div>
+
+            <!-- NORMAL LINK PREVIEW -->
+            {% if ogtitle %}
+              <h4 class="mb-4">Link Preview : </h4>
+              <div class="my-card shadow-lg">
+                {% if ogimage %}<img class="my-card-img" src="{{ogimage}}" alt="">{% endif %}
+                <div class="my-card-body">
+                  {% if ogsite %}<h6 class="text-muted">{{ogsite}}</h6>{% endif %}
+                  {% if ogtitle %}<h5>{{ogtitle}}</h5>{% endif %}
+                  {% if ogdescription %}<p>{{ogdescription | truncatechars:70}}</p>{% endif %}
+                  {% if ogurl %}<a href="{{ogurl}}">{{ogurl | truncatechars:50}}</a>{% endif %}
+                </div>
+              </div>
+            {% endif %}
+
+            <!-- TWITTER LINK PREVIEW -->
+            <!-- SUMMRY THEME -->
+            {% if twtr_card %}
+            <h4 class="mb-4">Twitter Link Preview : </h4>
+              {% if twtr_card == 'summary' %}
+                <h4>summry</h4>
+                <div class="my-card shadow-lg">
+                  {% if twtr_img %}<img class="my-card-img" src="{{twtr_img}}" alt="">{% endif %}
+                  <div class="my-card-body">
+                    {% if twtr_site %}<h6 class="text-muted">{{twtr_site}}</h6>{% endif %}
+                    {% if twtr_title %}<h5>{{twtr_title}}</h5>{% endif %}
+                    {% if twtr_description %}<p>{{twtr_description | truncatechars:70}}</p>{% endif %}
+                  </div>
+                </div>
+              {% elif twtr_card == 'summary_large_image' %}
+                <h4>summary_large_image</h4>
+                <div class="my-card shadow-lg">
+                  {% if twtr_img %}<img class="my-card-img" src="{{twtr_img}}" alt="">{% endif %}
+                  <div class="my-card-body">
+                    {% if twtr_site %}<h6 class="text-muted">{{twtr_site}}</h6>{% endif %}
+                    {% if twtr_title %}<h5>{{twtr_title}}</h5>{% endif %}
+                    {% if twtr_description %}<p>{{twtr_description | truncatechars:70}}</p>{% endif %}
+                  </div>
+                </div>
+
+              <!-- PLAYER THEME -->
+              {% elif twtr_card == 'player' %}
+                <h4>player theme</h4>
+                <div class="my-card shadow-lg">
+                  {% if twtr_img %}<img class="my-card-img" src="{{twtr_img}}" alt="">{% endif %}
+                  {% if twtr_embeded %}<iframe src="{{twtr_embeded}}" width="560" height="350"></iframe>{% endif %}
+                  <div class="my-card-body">
+                    {% if twtr_site %}<h6 class="text-muted">{{twtr_site}}</h6>{% endif %}
+                    {% if twtr_title %}<h5>{{twtr_title}}</h5>{% endif %}
+                    {% if twtr_description %}<p>{{twtr_description | truncatechars:70}}</p>{% endif %}
+                  </div>
+                </div>
+              <!-- APP CARD THEME -->
+              {% elif twtr_card == 'app' %}
+                  <h4>app theme</h4>
+                  <div class="twitter-card shadow-lg">
+                      <img class="twitter-card-img" src="{{twtr_img}}" alt="">
+                      <div class="twitter-card-body">
+                        {% if twtr_site %}<h6 class="text-muted">{{twtr_site}}</h6>{% endif %}
+                        {% if twtr_title %}<h5>{{twtr_title}}</h5>{% endif %}
+                        {% if twtr_description %}<p>{{twtr_description | truncatechars:70}}</p>{% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  </body>
+</html>
