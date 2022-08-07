@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from .forms import urlForm
 from django.contrib import messages
+import os
+from LinkPreviewer.settings import BASE_DIR
 # Create your views here.
 
 
@@ -17,6 +19,7 @@ def preview(request):
             options = Options()
             options.add_argument('--headless')
             options.add_argument('--disable-gpu')
+            options.add_argument('--no-sandbox')
             driver = webdriver.Chrome(executable_path=r"./chromedriver.exe", chrome_options=options)
             try:
                 driver.get(url)
@@ -73,8 +76,6 @@ def preview(request):
                 context_dict['twtr_site'] = twtr_site['content'] if twtr_site else site
             if twtr_embeded and twtr_card['content']=='player':
                 context_dict['twtr_embeded'] = twtr_embeded['content']
-            
-            print(context_dict)
 
             context_dict['form'] = form
             return render(request, 'baseApp/index.html', context_dict)

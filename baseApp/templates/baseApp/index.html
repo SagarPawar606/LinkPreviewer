@@ -124,7 +124,6 @@
             {% if twtr_card %}
             <h4 class="mb-4">Twitter Link Preview : </h4>
               {% if twtr_card == 'summary' %}
-                <h4>summry</h4>
                 <div class="my-card shadow-lg">
                   {% if twtr_img %}<img class="my-card-img" src="{{twtr_img}}" alt="">{% endif %}
                   <div class="my-card-body">
@@ -134,7 +133,6 @@
                   </div>
                 </div>
               {% elif twtr_card == 'summary_large_image' %}
-                <h4>summary_large_image</h4>
                 <div class="my-card shadow-lg">
                   {% if twtr_img %}<img class="my-card-img" src="{{twtr_img}}" alt="">{% endif %}
                   <div class="my-card-body">
@@ -146,7 +144,6 @@
 
               <!-- PLAYER THEME -->
               {% elif twtr_card == 'player' %}
-                <h4>player theme</h4>
                 <div class="my-card shadow-lg">
                   {% if twtr_img %}<img class="my-card-img" src="{{twtr_img}}" alt="">{% endif %}
                   {% if twtr_embeded %}<iframe src="{{twtr_embeded}}" width="560" height="350"></iframe>{% endif %}
@@ -158,7 +155,6 @@
                 </div>
               <!-- APP CARD THEME -->
               {% elif twtr_card == 'app' %}
-                  <h4>app theme</h4>
                   <div class="twitter-card shadow-lg">
                       <img class="twitter-card-img" src="{{twtr_img}}" alt="">
                       <div class="twitter-card-body">
