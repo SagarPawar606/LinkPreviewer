@@ -145,7 +145,6 @@
               <!-- PLAYER THEME -->
               {% elif twtr_card == 'player' %}
                 <div class="my-card shadow-lg">
-                  {% if twtr_img %}<img class="my-card-img" src="{{twtr_img}}" alt="">{% endif %}
                   {% if twtr_embeded %}<iframe src="{{twtr_embeded}}" width="560" height="350"></iframe>{% endif %}
                   <div class="my-card-body">
                     {% if twtr_site %}<h6 class="text-muted">{{twtr_site}}</h6>{% endif %}

@@ -46,9 +46,7 @@ def preview(request):
             twtr_img = soup.find("meta", attrs={"name":"twitter:image"})
             twtr_url = soup.find("meta", attrs={"name":"twitter:url"})
             twtr_site = soup.find("meta", attrs={"name":"twitter:site"})
-            twtr_embeded = None
-            if twtr_embeded and twtr_card['content']=='player':
-                twtr_embeded = soup.find("meta", attrs={"name":"twitter:player"})
+            twtr_embeded = soup.find("meta", attrs={"name":"twitter:player"})
 
             og_tags = ['ogtitle', 'ogdescription', 'ogimage', 'ogurl', 'ogsite']
             og_content = [title, description, image, url, site]
@@ -74,9 +72,10 @@ def preview(request):
                 context_dict['twtr_img'] = twtr_img['content'] if twtr_img else image
                 context_dict['twtr_url'] = twtr_url['content'] if twtr_url else url
                 context_dict['twtr_site'] = twtr_site['content'] if twtr_site else site
-            if twtr_embeded and twtr_card['content']=='player':
-                context_dict['twtr_embeded'] = twtr_embeded['content']
-
+                context_dict['twtr_embeded'] = twtr_embeded['content'] if twtr_embeded else None
+            else:
+                messages.error(request, f'Couldn\'t found twitter:card tag')
+                
             context_dict['form'] = form
             return render(request, 'baseApp/index.html', context_dict)
     else:
